@@ -1,0 +1,70 @@
+Reverse Engineering : 
+
+Since this is .Net file, I imported the Spyware Sample to DNSspy. 
+
+1. Entry Point (Main Funbction)
+2. Packed Function (Óµ @02000012) Intresting
+
+Lets start with the Entry Point. 
+
+From the below screenshot we can clearly see the functions. (Most of them are inactive)
+Active functions : 
+
+GetCurrentWindow
+RecordKeys (Intresting)
+KeyloggerProcess
+SendNotification
+ClipboardLogging
+PasswordRecovery
+
+RecordKeys() : 
+
+1. The function contains a for (;;) loop, meaning it will execute indefinitely unless there's a break statement or an exception that exits the loop.
+2. Inside the loop, there's a call to Thread.Sleep(3000000), which causes the program to pause execution for 3,000,000 milliseconds (or 3,000 seconds, which is 50 minutes). This suggests that the function is intended to be run periodically, with a delay of approximately 50 minutes between each iteration. (Probably Antivirus Evasion Technique)
+3. Processing Keystroke Log: Inside the try block, the function appears to be processing a keystroke log stored in the GonnyCam.KeyStrokeLog variable.
+	It calculates the number of occurrences of the substring "Window title: " in the log using a regular expression.
+	It then iterates over each occurrence of "Window title: " in the log and extracts the window title and keystrokes typed between each occurrence.
+	For each pair of window title and keystrokes typed, it calls a method Send.SendLog to send this information somewhere, potentially for logging or monitoring purposes.
+	After processing all the occurrences of "Window title: ", it waits for 100 milliseconds before continuing to the next iteration of the loop.
+4. Resetting Keystroke Log: After processing all the keystrokes in the log, it sets GonnyCam.KeyStrokeLog to null, presumably to clear the log for the next iteration.
+5. Send.SendLog() GonnyCam.P_Link: This likely represents some kind of link or identifier associated with the keystroke log. It's being passed as the first parameter to the SendLog method.
+
+Send() This class contains a method SendLog that sends different types of logs (keystrokes, passwords, clipboard contents, etc.) to a specified link, along with additional metadata like window title, application name, username, and timestamp, via HTTP requests.
+You can see in the above screenshot, there are POST request that are made. Below Ive decrypted the Post Requests
+1. post.php?type=keystrokes&machine name=   
+2. post.php?type=passwords&machine name=
+3. post.php?type=clipboard&machine name=
+
+When Exploring this function further, found that P_Link is assigned with a destination URL : "http://ziraat-helpdesk.com/components/com_content/limpopapa/";
+
+Summary : 
+
+The RecordKeys() function periodically processes a keystroke log stored in GonnyCam.KeyStrokeLog. It iterates through occurrences of "Window title: " in the log, extracting window titles and keystrokes typed. This data is then sent using Send.SendLog() method, likely for logging or monitoring purposes, to a destination URL specified in GonnyCam.P_Link. Additionally, the function uses a delay of approximately 50 minutes between iterations, possibly as an antivirus evasion technique. The Send() class contains a SendLog() method responsible for sending various types of logs, including keystrokes, passwords, and clipboard contents, to the specified destination URL via HTTP requests.
+
+
+
+
+PasswordRecovery() :
+
+This function PasswordRecovery() attempts to recover passwords from various applications and browsers. It sequentially calls methods from different modules such as GonnyCam.RecoverMail, GonnyCam.RecoverBrowsers, Filezilla, IMVU, InternetDownloadManager, JDownloader, and Paltalk, each responsible for recovering passwords from specific software like email clients, web browsers, and other applications. If an exception occurs during the password recovery process.
+1. While checking RecoveryBrowser > ReadFile() function attempts to read the content of a file named "Browsers.txt". If the file doesn't exist, it attempts to recover it from embedded resources using reflection to execute a command-line tool (Óµ.ØØØØ) with specific parameters. It then waits until the file is created before reading its content. Finally, it returns the content of the file or null if an exception occurs during the process.
+
+2. Filezilla.Recover() method aims to extract and recover passwords from Filezilla, an FTP client.
+It retrieves the content from Filezilla, presumably containing stored credentials.
+Then, it iterates through the content, looking for specific XML-like tags ("<Host>", "<User>", "<Pass>") indicating the presence of credential information.
+For each set of credentials found, it extracts the host, username, and password.
+Finally, it sends this information using Send.SendLog() method, likely for logging or monitoring purposes, with the appropriate parameters.
+
+3.IMVU.Recover() class provides a method Recover() to retrieve and recover IMVU account credentials stored in the Windows registry.
+It attempts to access the registry keys for IMVU username and password.
+It retrieves the username and password as strings from the registry.
+It converts the hexadecimal-encoded password into plain text.
+It sends the recovered username and password using the Send.SendLog() method, likely for logging or monitoring purposes.
+
+4. InternetDownloadManager.Recover() class contains a method Recover() designed to retrieve saved passwords from the Internet Download Manager (IDM) software.
+It constructs the registry key path for IDM passwords.
+It attempts to access the registry keys for IDM passwords.
+It iterates through each subkey under the IDM passwords registry key.
+For each subkey, it retrieves the username and encrypted password from the registry.
+It then decrypts the password and sends the recovered username, password, and other relevant information using the Send.SendLog() method, likely for logging or monitoring purposes.
+

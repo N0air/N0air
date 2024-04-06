@@ -1,0 +1,81 @@
+┍━━━━━━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑
+│ md5                    │ dc4200ac514006f084ead7f83b84c928                                                   │
+│ sha1                   │ 52e8f04d6b495d238f1a49283a10e2acc053123b                                           │
+│ sha256                 │ a850de0705c0f6095910aa1d5ed0e73a49581aa7427fcfaf2ff5144e93b047c1                   │
+│ analysis               │ static                                                                             │
+│ os                     │ any                                                                                │
+│ format                 │ pe                                                                                 │
+│ arch                   │ i386                                                                               │
+│ path                   │ C:/Users/*********/Desktop/Sample/************/Trojan[spy]MSILMSILZilla.bin     │
+┕━━━━━━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙
+
+┍━━━━━━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑
+│ ATT&CK Tactic          │ ATT&CK Technique                                                                   │
+┝━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┥
+│ COLLECTION             │ Clipboard Data T1115                                                               │
+│                        │ Input Capture::Keylogging T1056.001                                                │
+├────────────────────────┼────────────────────────────────────────────────────────────────────────────────────┤
+│ DISCOVERY              │ File and Directory Discovery T1083                                                 │
+│                        │ Process Discovery T1057                                                            │
+│                        │ Query Registry T1012                                                               │
+│                        │ System Information Discovery T1082                                                 │
+│                        │ System Location Discovery::System Language Discovery T1614.001                     │
+┕━━━━━━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙
+
+┍━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑
+│ MBC Objective               │ MBC Behavior                                                                  │
+┝━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┥
+│ COLLECTION                  │ Keylogging::Polling [F0002.002]                                               │
+├─────────────────────────────┼───────────────────────────────────────────────────────────────────────────────┤
+│ COMMAND AND CONTROL         │ C2 Communication::Receive Data [B0030.002]                                    │
+│                             │ C2 Communication::Send Data [B0030.001]                                       │
+├─────────────────────────────┼───────────────────────────────────────────────────────────────────────────────┤
+│ COMMUNICATION               │ HTTP Communication::Get Response [C0002.017]                                  │
+├─────────────────────────────┼───────────────────────────────────────────────────────────────────────────────┤
+│ DISCOVERY                   │ Application Window Discovery [E1010]                                          │
+│                             │ File and Directory Discovery [E1083]                                          │
+│                             │ System Information Discovery [E1082]                                          │
+├─────────────────────────────┼───────────────────────────────────────────────────────────────────────────────┤
+│ FILE SYSTEM                 │ Read File [C0051]                                                             │
+│                             │ Writes File [C0052]                                                           │
+├─────────────────────────────┼───────────────────────────────────────────────────────────────────────────────┤
+│ OPERATING SYSTEM            │ Registry::Query Registry Key [C0036.005]                                      │
+│                             │ Registry::Query Registry Value [C0036.006]                                    │
+├─────────────────────────────┼───────────────────────────────────────────────────────────────────────────────┤
+│ PROCESS                     │ Create Process [C0017]                                                        │
+│                             │ Create Thread [C0038]                                                         │
+│                             │ Suspend Thread [C0055]                                                        │
+│                             │ Terminate Process [C0018]                                                     │
+┕━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙
+
+┍━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑
+│ Capability                                           │ Namespace                                            │
+┝━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┥
+│ log keystrokes                                       │ collection/keylog                                    │
+│ log keystrokes via polling                           │ collection/keylog                                    │
+│ receive data                                         │ communication                                        │
+│ send data                                            │ communication                                        │
+│ find data using regex in .NET (6 matches)            │ data-manipulation/regex                              │
+│ access .NET resource (3 matches)                     │ executable/resource                                  │
+│ read clipboard data (2 matches)                      │ host-interaction/clipboard                           │
+│ get common file path (6 matches)                     │ host-interaction/file-system                         │
+│ check if file exists (4 matches)                     │ host-interaction/file-system/exists                  │
+│ read file on Windows (4 matches)                     │ host-interaction/file-system/read                    │
+│ write file on Windows                                │ host-interaction/file-system/write                   │
+│ set application hook                                 │ host-interaction/gui                                 │
+│ get graphical window text                            │ host-interaction/gui/window/get-text                 │
+│ get keyboard layout                                  │ host-interaction/hardware/keyboard                   │
+│ allocate unmanaged memory in .NET (2 matches)        │ host-interaction/memory                              │
+│ manipulate unmanaged memory in .NET (6 matches)      │ host-interaction/memory                              │
+│ get hostname                                         │ host-interaction/os/hostname                         │
+│ create process on Windows                            │ host-interaction/process/create                      │
+│ find process by PID                                  │ host-interaction/process/list                        │
+│ terminate process                                    │ host-interaction/process/terminate                   │
+│ query or enumerate registry key (3 matches)          │ host-interaction/registry                            │
+│ query or enumerate registry value (2 matches)        │ host-interaction/registry                            │
+│ create thread                                        │ host-interaction/thread/create                       │
+│ suspend thread (7 matches)                           │ host-interaction/thread/suspend                      │
+│ unmanaged call (5 matches)                           │ runtime                                              │
+│ compiled to the .NET platform                        │ runtime/dotnet                                       │
+┕━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙
+

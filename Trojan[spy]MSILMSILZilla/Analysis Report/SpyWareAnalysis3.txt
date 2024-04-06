@@ -1,0 +1,17 @@
+With all these information we are still not sure how these passwords are decrpted. So Lets take a look at the Resource Section. 
+
+Remember while exploring the RecoverBrowser() function we came accross ReadFile(). WithIn ReadFile we found 
+
+"Óµ.ØØØØ(executablePath, text3, Encryption.RSMDecrypt(array, bytes), false);" which has one more function RSMDecrypt() this returns Array.
+So now lets try to explore what that Array Contains. 
+
+Lets set to the breadkpoints to below lines: 
+
+1. string text2 = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Browsers.txt");
+
+2. Óµ.ØØØØ(executablePath, text3, Encryption.RSMDecrypt(array, bytes), false);
+
+3. Rfc2898DeriveBytes rfc2898DeriveBytes = new Rfc2898DeriveBytes(ƄƏƵÉ, new byte[8], 1);
+
+When you hit the breakpoint 3. You can see the value of Array. Below in the screenshot you can see that after taking the dump of  the 
+value of Array, its a PE file. 

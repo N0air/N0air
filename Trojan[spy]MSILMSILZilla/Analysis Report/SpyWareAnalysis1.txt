@@ -1,0 +1,69 @@
+Found this piece of Malware. When Unzipped with the password : crackinglessons.com, it exactrated a file with the extension
+.bin. Made a Hash : a850de0705c0f6095910aa1d5ed0e73a49581aa7427fcfaf2ff5144e93b047c1 and did a quick search in Virus Total, 
+found out that its a SpyWare with the name : Trojan[spy]:MSIL/MSILZilla. 
+
+
+Static Analysis : 
+
+This got me qurious, so I did a Static Analysis, trying to figure out the strings, any DNS addresses, passwords, Keys. Well, 
+as expected, most of the Malwares are packed. So No luck with the string search. 
+
+Next step, with just knowing that this piece of program is a Syware, I did a Capa Query. Which game me the file hashes, file format, Architecture
+Intrestingly, when i was going through the output, I found that this spyware uses .NET to access, allocate and manipulate memory. 
+Also it uses .NET to find data using Regex. 
+
+Key Indicators : 
+KeyLogging
+find data using regex in .NET
+read clipboard data
+Send and Receive Data using Command and Control Server. 
+
+I think we have enough data using Static Analysis. So far, I know this is a .NET file, an excuitable. Which when excuited 
+sends and receive data for C&C machine. Isn't this a cliche ? Practically every Malware does this. Anyway, lets try to do some 
+Dynamic Analysis now 
+
+
+Dynamic Analysis : 
+
+After Spawning multiple tools to track files created and deleted, to caputre any dns reqeusts, register entries, process creation
+below are the key points observed. 
+
+Our beloved SpyWare dropped 3 files immidiately after execution :
+1. C:\ProgramData\Mails.txt
+2. C:\Users\admin\AppData\Local\Temp\bhv368C.tmp
+3. C:\ProgramData\Browsers.txt
+
+Also, it tried to connect to 2 DNS : 
+
+49.13.77.253 -> ziraat-helpdesk.com	
+131.107.255.255 - > dns.msftncsi.com	
+
+Did a quick IP lookup on the IP : 49.13.77.253  Below are the results : 
+
+Decimal:822955517
+Hostname:static.253.77.13.49.clients.your-server.de
+ASN:24940
+ISP:Hetzner Online GmbH
+Services:Datacenter
+Assignment:Likely Static IP
+Country:Germany
+State/Region:Sachsen
+City:Falkenstein
+Latitude:50.4779 (50° 28′ 40.27″ N)
+Longitude:12.3716 (12° 22′ 17.63″ E)
+
+So Far Summary : 
+
+1. Drops the executable file immediately after the start
+2. Steals credentials
+3. Actions looks like stealing of personal data
+4. Uses NirSoft utilities to collect credentials
+5. Steals credentials from Web Browsers
+6. C&C Might be in Germany, Falkenstein.
+
+Since we have some idea has to "What" this SpyWare does after excuition, lets try to understand "How" it does what it does.Next 
+stop, REVERSE ENGINEERING !!! Such a cool thing to say !!
+
+
+
+
